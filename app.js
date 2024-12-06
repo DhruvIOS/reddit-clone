@@ -250,7 +250,7 @@ function displayPostNames() {
         return post ? post.title : null;
     }).filter(title => title !== null); 
 
-s
+
     upVotesPostName.textContent = `Upvoted posts: ${upvotedPostTitles.join(", ")}`;
 }
 
