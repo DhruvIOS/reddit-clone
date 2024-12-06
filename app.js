@@ -30,7 +30,7 @@ addEventListener("load", () => {
 
 
 
-// totalSub.textContent = "Total Subscribed Subreddits: " + users[0].subscribedSubreddits.length;
+
 
 
 
@@ -50,9 +50,9 @@ function createSubredditButtons() {
         subBtn.classList.add("subBtn");
 
         subBtn.addEventListener("click", () => {
-            const user = data.users[0]; // Access the first user
+            const user = data.users[0]; 
 
-            // Check if the user is already subscribed
+           
             if (!user.subscribedSubreddits.includes(subreddit.id)) {
                 user.subscribedSubreddits.push(subreddit.id);
                 console.log(`Subscribed to subreddit ID: ${subreddit.id}`);
@@ -78,7 +78,7 @@ const subredditPosts = document.getElementById("subredditPosts");
 const subredditComments = document.getElementById("subredditComments");
 
 
-// console.log(subreddits[0].posts[0].title);
+
 
 
 
@@ -96,8 +96,6 @@ subreddits.forEach(subreddit => {
 
         postContent.innerHTML += `<h4>${post.content} <span class="badge badge-secondary upVoteSpan"><button class="upVoteBtn" id="upVoteBtn" onClick="handleUpVote(${post.id})"> ^ </button></span></h4>`
 
-        // postTitle.textContent = post.title ;
-        // postContent.textContent = post.content;
         postElement.appendChild(postTitle);
         postElement.appendChild(postContent);
         subredditPosts.appendChild(postElement);
@@ -113,10 +111,10 @@ subreddits.forEach(subreddit => {
 })
 
 function handleUpVote(postId) {
-    // Get the current user (assuming the first user for simplicity)
-    const currentUser = data.users[0]; // Replace with actual user retrieval logic if needed
 
-    // Find the subreddit containing the post
+    const currentUser = data.users[0]; 
+
+
     const subreddit = data.subreddits.find(sub => 
         sub.posts.some(post => post.id === postId)
     );
@@ -126,31 +124,31 @@ function handleUpVote(postId) {
         return;
     }
 
-    // Find the specific post
+
     const post = subreddit.posts.find(post => post.id === postId);
 
-    // Check if the user has already upvoted this post
+
     if (currentUser.upVotePostIds && currentUser.upVotePostIds.includes(postId)) {
        alert("You have already upvoted this post.");
         return;
     }
 
-    // Increment the user's upvote count
-    currentUser.upVote += 1; // Increment the user's upvote count
 
-    // Initialize upVotePostIds if it doesn't exist and add the postId
+    currentUser.upVote += 1; 
+
+
     if (!currentUser.upVotePostIds) {
         currentUser.upVotePostIds = [];
     }
-    currentUser.upVotePostIds.push(postId); // Add the postId to the user's upvoted posts
+    currentUser.upVotePostIds.push(postId); 
 
-    // Optionally, you can log the post title or other details
+
     alert(`You have successfully upvoted the post: "${post.title}". Total upvotes: ${currentUser.upVote}`);
 
 
 
 
-    // Save updated data to localStorage
+
     saveDataToLocalStorage();
 
     DisplayTotalVotes();
@@ -164,53 +162,27 @@ function handleUpVote(postId) {
 
 
 
-    // data.subreddits.forEach(subreddit => {
-    //     subreddit.posts.forEach(post => {
-
-    //         const commentPost = document.getElementById('commentInput');
-
-    //         const commentBtn = document.getElementById('commentBTN')
-
-
-
-    //         commentBtn.addEventListener("click", () => {
-    //             const input = commentPost.value;
-    
-    //             post.comments.push(input);
-               
-    //             saveDataToLocalStorage();
-    
-    //             alert("Comment added")
-    //         })
-
-
-
-    //     });
-
-
-    // });
-
 
 
     function displayComments() {
         data.subreddits.forEach(subreddit => {
             subreddit.posts.forEach(post => {
-                // Create a container for the comments of the current post
+
                 const commentsContainer = document.getElementById('postID');
-                commentsContainer.classList.add('comments'); // Optional: Add a class for styling
+                commentsContainer.classList.add('comments'); 
     
-                // Display existing comments
+
                 post.comments.forEach(comment => {
                     const commentContent = document.createElement("p");
                     commentContent.classList.add('comment');
-                    commentContent.textContent = comment; // Set the text content to the individual comment
+                    commentContent.textContent = comment; 
     
-                    commentsContainer.appendChild(commentContent); // Append the comment content to the comments container
+                    commentsContainer.appendChild(commentContent); 
                 });
 
                 subredditPosts.appendChild(commentsContainer)
     
-                // Create input and button for new comments
+              
                 const commentPost = document.createElement("input");
                 const commentBtn = document.createElement("button");
     
@@ -223,29 +195,29 @@ function handleUpVote(postId) {
                 commentPost.placeholder = "Add a comment...";
                 commentPost.id = 'commentInput';
     
-                // Append the input and button to the comments container
+
                 commentsContainer.appendChild(commentPost);
                 commentsContainer.appendChild(commentBtn);
     
-                // Add event listener for the submit button
+
                 commentBtn.addEventListener("click", () => {
                     const input = commentPost.value;
     
-                    // Add the new comment to the post's comments array
+
                     post.comments.push(input);
                     
-                    // Save data to local storage (if needed)
+
                     saveDataToLocalStorage();
     
-                    // Create a new comment element and display it immediately
+
                     const newCommentContent = document.createElement("p");
                     newCommentContent.classList.add('comment');
-                    newCommentContent.textContent = input; // Set the text content to the new comment
+                    newCommentContent.textContent = input; 
     
-                    // Insert the new comment above the input field
+
                     commentsContainer.insertBefore(newCommentContent, commentPost);
     
-                    // Clear the input field
+
                     commentPost.value = '';
     
                     alert("Comment added");
@@ -263,22 +235,22 @@ function updateSubscribedSubredditsDisplay() {
     totalSub.textContent = `Subscribed subreddits: ${subscribedNames.join(", ")}`;
 }
 function displayPostNames() {
-    const currentUser = data.users[0]; // Assuming the first user for simplicity
+    const currentUser = data.users[0]; 
 
-    // Check if the user has upvoted any posts
+
     if (!currentUser.upVotePostIds || currentUser.upVotePostIds.length === 0) {
         upVotesPostName.textContent = "You have not upvoted any posts.";
         return;
     }
 
-    // Retrieve the titles of the upvoted posts
+
     const upvotedPostTitles = currentUser.upVotePostIds.map(postId => {
         // Find the post in all subreddits
         const post = data.subreddits.flatMap(sub => sub.posts).find(post => post.id === postId);
         return post ? post.title : null;
-    }).filter(title => title !== null); // Filter out any null values
+    }).filter(title => title !== null); 
 
-    // Display the titles
+s
     upVotesPostName.textContent = `Upvoted posts: ${upvotedPostTitles.join(", ")}`;
 }
 
@@ -288,49 +260,49 @@ function DisplayTotalVotes(){
     totalUpVotes.textContent = `Total upvotes: ${totalVotes}`
 }
 
-// Function to save data to localStorage
+
 function saveDataToLocalStorage() {
     localStorage.setItem('data', JSON.stringify(data));
 }
 
 
-//blacbox start trying the code from here
 
 
 
-// Function to save data to localStorage
+
+
 let selectedSubreddit = null;
 
-// Function to select a subreddit from the dropdown
+
 function selectSubreddit(subredditName) {
     selectedSubreddit = subredditName;
     const accountNameBtn = document.getElementById("subredditSelect");
     accountNameBtn.textContent = subredditName; // Update button text to show selected subreddit
 }
 
-// Event listener for the "Post" button
+
 document.getElementById("addPostButton").addEventListener("click", () => {
     const title = document.getElementById("inputTitle").value.trim();
     const content = document.getElementById("inputContent").value.trim();
 
-    // Validate input
+
     if (!title || !content || !selectedSubreddit) {
         alert("Please fill in all fields and select a subreddit.");
         return;
     }
 
-    // Find the selected subreddit
+
     const subreddit = data.subreddits.find(sub => sub.name === selectedSubreddit);
     if (!subreddit) {
         alert("Subreddit not found.");
         return;
     }
 
-    // Generate a new post ID across all subreddits
+
     const allPostIds = data.subreddits.flatMap(sub => sub.posts.map(post => post.id));
     const newPostId = allPostIds.length > 0 ? Math.max(...allPostIds) + 1 : 1;
 
-    // Create the new post object
+
     const newPost = {
         id: newPostId,
         title: title,
@@ -338,40 +310,40 @@ document.getElementById("addPostButton").addEventListener("click", () => {
         comments: []
     };
 
-    // Add the new post to the subreddit
-    subreddit.posts.unshift(newPost); // Add to the start of the array
 
-    // Save the updated data to localStorage
+    subreddit.posts.unshift(newPost); 
+
+
     saveDataToLocalStorage();
 
-    // Clear the input fields
+
     document.getElementById("inputTitle").value = '';
     document.getElementById("inputContent").value = '';
-    selectedSubreddit = null; // Reset selected subreddit
+    selectedSubreddit = null; 
 
-    // Optionally, you can refresh the posts display or close the modal
+
     alert("Post added successfully!");
-    $('#addPostModal').modal('hide'); // Close the modal
+    $('#addPostModal').modal('hide'); 
 
-    // Refresh the posts display for the selected subreddit
+
     displayPostsForSelectedSubreddit();
 });
 
-// Function to display posts for the selected subreddit
+
 function displayPostsForSelectedSubreddit() {
     const subreddit = data.subreddits.find(sub => sub.name === selectedSubreddit);
     const subredditPosts = document.getElementById("subredditPosts");
-    subredditPosts.innerHTML = ''; // Clear previous posts
+    subredditPosts.innerHTML = ''; 
 
     if (subreddit) {
-        // Display each post, with the newest ones first
+
         subreddit.posts.forEach(post => {
             displayPost(post);
         });
     }
 }
 
-// Function to display a single post
+
 function displayPost(post) {
     const subredditPosts = document.getElementById("subredditPosts");
     const postElement = document.createElement("div");
@@ -383,29 +355,29 @@ function displayPost(post) {
                 <p class="card-text">${post.content}</p>
             </div>
         </div>`;
-    subredditPosts.prepend(postElement); // Add the post at the top of the list
+    subredditPosts.prepend(postElement); 
 }
 
-// Function to save data to localStorage
+
 function saveDataToLocalStorage() {
     localStorage.setItem('data', JSON.stringify(data));
 }
 
-// Initialize the app (load data from localStorage if available)
+
 function initializeApp() {
     const storedData = localStorage.getItem('data');
     if (storedData) {
         data = JSON.parse(storedData);
     }
 
-    // Optionally, refresh the UI (e.g., subreddit dropdown, posts)
+
     updateSubredditDropdown();
 }
 
-// Function to update the subreddit dropdown
+
 function updateSubredditDropdown() {
     const subredditDropdown = document.getElementById("subredditDropdown");
-    subredditDropdown.innerHTML = ''; // Clear previous options
+    subredditDropdown.innerHTML = ''; 
 
     data.subreddits.forEach(sub => {
         const option = document.createElement("button");
@@ -416,5 +388,5 @@ function updateSubredditDropdown() {
     });
 }
 
-// Initial setup
+
 initializeApp();
